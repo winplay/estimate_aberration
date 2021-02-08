@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 __author__ = 'Jacopo Antonello'
-__copyright__ = 'Copyright 2018, Jacopo Antonello'
+__copyright__ = 'Copyright 2016-2021, Jacopo Antonello'
 __license__ = 'GPLv3+'
 __version__ = '1.0.3'
 __email__ = 'jacopo@antonello.org'

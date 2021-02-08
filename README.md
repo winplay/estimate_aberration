@@ -42,7 +42,13 @@ Make sure you have installed the packages in requirements.
 ```bash
 git clone https://github.com/jacopoantonello/enzpy.git
 cd enzpy
-sudo python setup.py install
+
+# static local installation
+python setup.py install --user
+
+# or install in development mode
+# python setup.py develop --user
+
 ```
 
 
