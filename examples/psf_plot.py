@@ -95,7 +95,7 @@ if __name__ == '__main__':
     psfplot = PSFPlot()
 
     # beta (diffraction-limited), N_beta = cpsf.czern.nk
-    beta = np.zeros(psfplot.cpsf.czern.nk, dtype=np.complex)
+    beta = np.zeros(psfplot.cpsf.czern.nk, dtype=complex)
     beta[0] = 1.0
     beta[5] = 1j * 0.3
     beta[6] = -1j * 0.3

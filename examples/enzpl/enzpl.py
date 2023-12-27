@@ -264,12 +264,12 @@ class ENZPL:
             'compression_opts': 9,
         }
 
-        f.create_dataset(prefix + 'Nb', data=np.array([self.Nb], dtype=np.int))
+        f.create_dataset(prefix + 'Nb', data=np.array([self.Nb], dtype=np.int_))
 
-        f.create_dataset(prefix + 'Nm', data=np.array([self.Nm], dtype=np.int))
+        f.create_dataset(prefix + 'Nm', data=np.array([self.Nm], dtype=np.int_))
 
         f.create_dataset(prefix + 'n_x',
-                         data=np.array([self.n_x], dtype=np.int))
+                         data=np.array([self.n_x], dtype=np.int_))
 
         params['data'] = np.array(self.G)
         f.create_dataset(prefix + 'G', **params)
@@ -328,24 +328,24 @@ class ENZPL:
         if prepend is not None:
             prefix = prepend + prefix
 
-        sc.Nb = int(f[prefix + 'Nb'].value[0])
-        sc.Nm = int(f[prefix + 'Nm'].value[0])
-        sc.n_x = int(f[prefix + 'n_x'].value[0])
+        sc.Nb = int(f[prefix + 'Nb'][()][0])
+        sc.Nm = int(f[prefix + 'Nm'][()][0])
+        sc.n_x = int(f[prefix + 'n_x'][()][0])
 
-        sc.G = matrix(f[prefix + 'G'].value)
-        sc.A = matrix(f[prefix + 'A'].value)
-        sc.c = matrix(f[prefix + 'c'].value)
-        sc.h = matrix(f[prefix + 'h'].value)
-        sc.b = matrix(f[prefix + 'b'].value)
+        sc.G = matrix(f[prefix + 'G'][()])
+        sc.A = matrix(f[prefix + 'A'][()])
+        sc.c = matrix(f[prefix + 'c'][()])
+        sc.h = matrix(f[prefix + 'h'][()])
+        sc.b = matrix(f[prefix + 'b'][()])
         sc.dims = {'l': 0, 'q': [1 + sc.Nm], 's': [2 * sc.Nb]}
-        sc.sA = matrix(f[prefix + 'sA'].value)
-        sc.sW = matrix(f[prefix + 'sW'].value)
-        sc.sZ = matrix(f[prefix + 'sZ'].value)
-        sc.beta_hat = matrix(f[prefix + 'beta_hat'].value)
-        sc.I11 = matrix(f[prefix + 'I11'].value)
-        sc.I12 = matrix(f[prefix + 'I12'].value)
-        sc.I21 = matrix(f[prefix + 'I21'].value)
-        sc.I22 = matrix(f[prefix + 'I22'].value)
+        sc.sA = matrix(f[prefix + 'sA'][()])
+        sc.sW = matrix(f[prefix + 'sW'][()])
+        sc.sZ = matrix(f[prefix + 'sZ'][()])
+        sc.beta_hat = matrix(f[prefix + 'beta_hat'][()])
+        sc.I11 = matrix(f[prefix + 'I11'][()])
+        sc.I12 = matrix(f[prefix + 'I12'][()])
+        sc.I21 = matrix(f[prefix + 'I21'][()])
+        sc.I22 = matrix(f[prefix + 'I22'][()])
 
         return sc
 

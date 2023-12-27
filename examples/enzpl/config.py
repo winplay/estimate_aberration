@@ -118,34 +118,34 @@ class Config:
         }
 
         f.create_dataset(prefix + 'wavelength',
-                         data=np.array([self.wavelength], dtype=np.float))
+                         data=np.array([self.wavelength], dtype=np.float_))
 
         f.create_dataset(prefix + 'aperture_radius',
-                         data=np.array([self.aperture_radius], dtype=np.float))
+                         data=np.array([self.aperture_radius], dtype=np.float_))
 
         f.create_dataset(prefix + 'focal_length',
-                         data=np.array([self.focal_length], dtype=np.float))
+                         data=np.array([self.focal_length], dtype=np.float_))
 
         f.create_dataset(prefix + 'image_width',
-                         data=np.array([self.image_width], dtype=np.int))
+                         data=np.array([self.image_width], dtype=np.int_))
 
         f.create_dataset(prefix + 'image_height',
-                         data=np.array([self.image_height], dtype=np.int))
+                         data=np.array([self.image_height], dtype=np.int_))
 
         f.create_dataset(prefix + 'pixel_size',
-                         data=np.array([self.pixel_size], dtype=np.float))
+                         data=np.array([self.pixel_size], dtype=np.float_))
 
         f.create_dataset(prefix + 'n_alpha',
-                         data=np.array([self.n_alpha], dtype=np.int))
+                         data=np.array([self.n_alpha], dtype=np.int_))
 
         f.create_dataset(prefix + 'n_beta',
-                         data=np.array([self.n_beta], dtype=np.int))
+                         data=np.array([self.n_beta], dtype=np.int_))
 
         f.create_dataset(prefix + 'fit_L',
-                         data=np.array([self.fit_L], dtype=np.int))
+                         data=np.array([self.fit_L], dtype=np.int_))
 
         f.create_dataset(prefix + 'fit_K',
-                         data=np.array([self.fit_K], dtype=np.int))
+                         data=np.array([self.fit_K], dtype=np.int_))
 
         params['data'] = self.focus_positions
         f.create_dataset(prefix + 'focus_positions', **params)
@@ -179,20 +179,20 @@ class Config:
         if prepend is not None:
             prefix = prepend + prefix
 
-        sc.wavelength = float(f[prefix + 'wavelength'].value[0])
-        sc.aperture_radius = float(f[prefix + 'aperture_radius'].value[0])
-        sc.focal_length = float(f[prefix + 'focal_length'].value[0])
-        sc.image_width = int(f[prefix + 'image_width'].value[0])
-        sc.image_height = int(f[prefix + 'image_height'].value[0])
-        sc.pixel_size = float(f[prefix + 'pixel_size'].value[0])
-        sc.n_alpha = int(f[prefix + 'n_alpha'].value[0])
-        sc.n_beta = int(f[prefix + 'n_beta'].value[0])
-        sc.fit_L = int(f[prefix + 'fit_L'].value[0])
-        sc.fit_K = int(f[prefix + 'fit_K'].value[0])
+        sc.wavelength = float(f[prefix + 'wavelength'][()])
+        sc.aperture_radius = float(f[prefix + 'aperture_radius'][()])
+        sc.focal_length = float(f[prefix + 'focal_length'][()])
+        sc.image_width = int(f[prefix + 'image_width'][()])
+        sc.image_height = int(f[prefix + 'image_height'][()])
+        sc.pixel_size = float(f[prefix + 'pixel_size'][()])
+        sc.n_alpha = int(f[prefix + 'n_alpha'][()])
+        sc.n_beta = int(f[prefix + 'n_beta'][()])
+        sc.fit_L = int(f[prefix + 'fit_L'][()])
+        sc.fit_K = int(f[prefix + 'fit_K'][()])
 
-        sc.focus_positions = f[prefix + 'focus_positions'].value
-        sc.xspace = f[prefix + 'xspace'].value
-        sc.yspace = f[prefix + 'yspace'].value
+        sc.focus_positions = f[prefix + 'focus_positions'][()]
+        sc.xspace = f[prefix + 'xspace'][()]
+        sc.yspace = f[prefix + 'yspace'][()]
 
         sc.phase_fit = FitZern.load_h5py(f, prepend=prefix + 'phase_fit/')
         sc.phase_grid = sc.phase_fit.z
@@ -225,27 +225,27 @@ if __name__ == '__main__':
 
     parser.add_argument('--wavelength',
                         type=float,
-                        default=632.8e-9,
+                        default=393e-9,
                         help='Wavelength [m].')
     parser.add_argument('--aperture-radius',
                         type=float,
-                        default=0.002,
+                        default=2.225e-3,
                         help='Aperture radius [m].')
     parser.add_argument('--focal-length',
                         type=float,
-                        default=500e-3,
+                        default=180e-3,
                         help='Focal length [m].')
     parser.add_argument('--pixel-size',
                         type=float,
-                        default=7.4e-6,
+                        default=3.45e-6,
                         help='Pixel size [m].')
     parser.add_argument('--image-width',
                         type=int,
-                        default=33,
+                        default=80,
                         help='Image width [#pixels].')
     parser.add_argument('--image-height',
                         type=int,
-                        default=35,
+                        default=80,
                         help='Image height [#pixels].')
     parser.add_argument(
         '--n-alpha',
