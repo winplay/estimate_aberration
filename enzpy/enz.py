@@ -182,10 +182,10 @@ class CPsf:
             <http://resolver.tudelft.nl/uuid:8d96ba75-24da-4e31-a750-1bc348155061>`__.
 
         """
-        n = self._numpify(n, np.int)
-        m = self._numpify(m, np.int)
-        r = self._numpify(r, np.float)
-        f = self._numpify(f, np.complex)
+        n = self._numpify(n, np.int_)
+        m = self._numpify(m, np.int_)
+        r = self._numpify(r, np.float_)
+        f = self._numpify(f, np.complex_)
 
         Vnm = vnmpocnp(r, f, n, m, L_max=L_max, ncpus=ncpus)
 
@@ -241,8 +241,8 @@ class CPsf:
 
         """
         U = complex(0.0)
-        r = self._numpify(r, np.float)
-        f = self._numpify(f, np.complex)
+        r = self._numpify(r, np.float_)
+        f = self._numpify(f, np.complex_)
         assert (r.size == 1)
         assert (f.size == 1)
         n, m = np.array([0]), np.array([0])
@@ -301,9 +301,9 @@ class CPsf:
             <http://resolver.tudelft.nl/uuid:8d96ba75-24da-4e31-a750-1bc348155061>`__.
 
         """
-        x_sp = self._numpify(x_sp, np.float).ravel(order='F')
-        y_sp = self._numpify(y_sp, np.float).ravel(order='F')
-        f_sp = self._numpify(f_sp, np.complex).ravel(order='F')
+        x_sp = self._numpify(x_sp, np.float_).ravel(order='F')
+        y_sp = self._numpify(y_sp, np.float_).ravel(order='F')
+        f_sp = self._numpify(f_sp, np.complex_).ravel(order='F')
 
         xx, yy = np.meshgrid(x_sp, y_sp)
         r_sp = np.sqrt(np.square(xx) + np.square(yy)).ravel(order='F')
@@ -314,12 +314,12 @@ class CPsf:
         ph_sp = np.arctan2(yy, xx).ravel(order='F')
         Ugrid = np.zeros((x_sp.size, y_sp.size, f_sp.size, self.czern.nk),
                          order='F',
-                         dtype=np.complex)
+                         dtype=np.complex_)
         Vnm = vnmpocnp(r_sp, f_sp, self.czern.ntab, self.czern.mtab)
         assert (np.all(np.isfinite(Vnm)))
         Cnm = np.zeros((ph_sp.size, self.czern.nk),
                        order='F',
-                       dtype=np.complex)
+                       dtype=np.complex_)
         for k in range(self.czern.nk):
             m = self.czern.mtab[k]
             Cnm[:, k] = 2.0 * self.czern.coefnorm[k] * (
@@ -375,20 +375,20 @@ class CPsf:
             <http://resolver.tudelft.nl/uuid:8d96ba75-24da-4e31-a750-1bc348155061>`__.
 
         """
-        r_sp = self._numpify(r_sp, np.float).ravel(order='F')
-        ph_sp = self._numpify(ph_sp, np.float).ravel(order='F')
-        f_sp = self._numpify(f_sp, np.complex).ravel(order='F')
+        r_sp = self._numpify(r_sp, np.float_).ravel(order='F')
+        ph_sp = self._numpify(ph_sp, np.float_).ravel(order='F')
+        f_sp = self._numpify(f_sp, np.complex_).ravel(order='F')
 
         # remove nans due to r = 0.0
         r_sp = self._trim_r(r_sp, min_r)
 
         Ugrid = np.zeros((r_sp.size, ph_sp.size, f_sp.size, self.czern.nk),
                          order='F',
-                         dtype=np.complex)
+                         dtype=np.complex_)
         Vnm = vnmpocnp(r_sp, f_sp, self.czern.ntab, self.czern.mtab)
         Cnm = np.zeros((ph_sp.size, self.czern.nk),
                        order='F',
-                       dtype=np.complex)
+                       dtype=np.complex_)
         for k in range(self.czern.nk):
             m = self.czern.mtab[k]
             Cnm[:, k] = 2.0 * self.czern.coefnorm[k] * (
@@ -435,7 +435,7 @@ class CPsf:
 
         """
         return np.dot(self.Ugrid[i, j, f_k, :],
-                      self._numpify(beta, np.complex))
+                      self._numpify(beta, np.complex_))
 
     def eval_grid_f(self, beta, f_k=0, const_phase=0.0):
         r"""Slice the complex point-spread function grid at defocus `f_k`.
@@ -522,7 +522,7 @@ class CPsf:
                 plot_psf(U)
 
             # beta (diffraction-limited), N_beta = cpsf.czern.nk
-            beta = np.zeros(cpsf.czern.nk, dtype=np.complex)
+            beta = np.zeros(cpsf.czern.nk, dtype=np.complex_)
             beta[0] = 1.0
 
             # or a random beta
@@ -557,7 +557,7 @@ class CPsf:
         """
         return np.exp(-1j * const_phase) * (np.dot(
             self.Ugrid[:, :, f_k], self._numpify(beta,
-                                                 np.complex)).ravel(order='F'))
+                                                 np.complex_)).ravel(order='F'))
 
     def save(self,
              filename,
