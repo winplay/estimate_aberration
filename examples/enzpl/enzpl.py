@@ -84,11 +84,11 @@ class ENZPL:
         pass
 
     def setup(self, AA):
-        Nb, Nm = AA.size
+        Nb, Nm = AA.size #Nm=Ni*Nf(N_pixel*N_f)
         n_x1 = Nb * (Nb + 1) // 2
         n_x2 = Nb * (Nb - 1) // 2
 
-        print('make Di and Fi...', end='')
+        print('make Di and Fi...', end='') ##按像面上的方位角操作？
         Di = matrix(0.0, (Nb**2, Nm))
         Fi = matrix(0.0, (Nb**2, Nm))
         t1 = time()
@@ -103,7 +103,7 @@ class ENZPL:
         idg = [(i, i) for i in range(Nb)]
         ilw = [(i, j) for i in range(Nb) for j in range(i)]
 
-        print('make E1...', end='')
+        print('make E1...', end='') ## beta^{H}·beta. E1由对角和左下角元素构成, E2由左下角元素构成;
         t1 = time()
         E1 = matrix(0.0, (Nb**2, n_x1))
         for c, ij in enumerate(idg):
@@ -496,18 +496,18 @@ if __name__ == '__main__':
     cfg = Config.load(args.cfgfile)
 
     # make mAi matrix
-    Nb = cfg.cpsf.czern.nk
-    Ni = cfg.xspace.size * cfg.yspace.size
-    Nf = cfg.focus_positions.size
+    Nb = cfg.cpsf.czern.nk #beta数目 N_{\beta}
+    Ni = cfg.xspace.size * cfg.yspace.size #CCD相机数量
+    Nf = cfg.focus_positions.size #像面数目，if defoucs parameter=[-2,0,2],Nf=3
     print('Nb = {}, Ni = {}, Nf = {}'.format(Nb, Ni, Nf))
     print('xspace.size = {}, yspace.size = {}'.format(cfg.xspace.size,
                                                       cfg.yspace.size))
-    mAi = matrix(0.0 + 1j * 0.0, (Nb, Ni * Nf))
+    mAi = matrix(0.0 + 1j * 0.0, (Nb, Ni * Nf)) #初始化mAi矩阵 [..a_{k}..] size=(Nb, Ni * Nf); Eq(7) in <Modal-based phase retrieval for adaptive optics>
     for fi in range(Nf):
         fparam = cfg.focus_positions[fi]
         fmul = exp(-1j * fparam)  # redundant
         mAi[:, Ni * fi:Ni * (fi + 1)] = matrix(
-            np.reshape(fmul * cfg.cpsf.Ugrid[:, :, fi], (Ni, Nb),
+            np.reshape(fmul * cfg.cpsf.Ugrid[:, :, fi], (Ni, Nb),  #cpsf Ugrid [r,phi,N_f,N_beta]
                        order='F').transpose().conjugate())
 
     spl = ENZPL()

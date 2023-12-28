@@ -98,7 +98,8 @@ mr = list()
 # loop through focus planes
 meas_list = list()
 for fi in range(Nf):
-    mr.append(optsys.measure_at_defocus(fi))
+    '''加载光强数据'''
+    mr.append(optsys.measure_at_defocus(fi))##加载光强数据。
 
     pr = mr[-1]['psf']
 
@@ -267,5 +268,6 @@ if len(mr) == 3:
     p.subplot(2, 2, 4)
     myplot(cr['psf'])
     p.title('aberration correction')
+    p.savefig('a.jpeg',dpi=200)
 
     p.show()
